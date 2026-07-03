@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# No reescribir archivos ni carpetas que sí existen
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Todo lo demás va al router
+RewriteRule ^ index.php [QSA,L]
