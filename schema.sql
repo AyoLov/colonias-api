@@ -43,6 +43,15 @@ CREATE TABLE IF NOT EXISTS colonias (
     CONSTRAINT fk_colonias_municipio FOREIGN KEY (municipio_id) REFERENCES municipios(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE IF NOT EXISTS api_rate_log (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    api_key_id INT UNSIGNED NOT NULL,
+    minuto DATETIME NOT NULL COMMENT 'timestamp truncado al minuto',
+    conteo INT UNSIGNED NOT NULL DEFAULT 1,
+    UNIQUE KEY uq_key_minuto (api_key_id, minuto),
+    CONSTRAINT fk_rate_log_key FOREIGN KEY (api_key_id) REFERENCES api_keys(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE IF NOT EXISTS colonia_poligonos (
     colonia_id INT UNSIGNED NOT NULL PRIMARY KEY,
     poligono GEOMETRY SRID 0 NOT NULL,

@@ -5,6 +5,7 @@
 
 require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/middleware/auth.php';
+require_once __DIR__ . '/middleware/rate_limit.php';
 require_once __DIR__ . '/helpers/cache.php';
 
 $startTime = microtime(true);
@@ -36,7 +37,8 @@ if ($uri === '/keys/crear' && $method === 'POST') {
 }
 
 // Todas las demás rutas requieren API key válida
-requireApiKey();
+$apiKeyRow = requireApiKey();
+enforceRateLimit((int) $apiKeyRow['id']);
 
 if (preg_match('#^/colonia/(\d+)$#', $uri, $m) && $method === 'GET') {
     $_GET['id'] = (int) $m[1];
