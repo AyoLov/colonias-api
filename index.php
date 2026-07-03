@@ -5,6 +5,7 @@
 
 require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/middleware/auth.php';
+require_once __DIR__ . '/helpers/cache.php';
 
 $startTime = microtime(true);
 
@@ -50,7 +51,7 @@ $routes = [
     'GET /geolocate' => __DIR__ . '/handlers/geolocate.php',
 ];
 
-if (isset($routes[$routeKey])) {
+if (isset($routes[$routeKey]) && is_file($routes[$routeKey])) {
     require $routes[$routeKey];
     exit;
 }
