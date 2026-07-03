@@ -17,9 +17,10 @@ $uri = '/' . trim($uri, '/');
 $method = $_SERVER['REQUEST_METHOD'];
 
 // Rutas públicas (sin API key)
-$publicRoutes = [
-    'GET /health' => __DIR__ . '/handlers/health.php',
-];
+$publicRoutes = [];
+if (is_file(__DIR__ . '/handlers/health.php')) {
+    $publicRoutes['GET /health'] = __DIR__ . '/handlers/health.php';
+}
 
 $routeKey = "$method $uri";
 if (isset($publicRoutes[$routeKey])) {
