@@ -1,0 +1,5 @@
+config/env.php
+cache/responses/
+import/data/
+import/logs/
+.DS_Store
